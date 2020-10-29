@@ -67,7 +67,7 @@ def explore_field(i, j, front, back):
 def case_zero(i, j, back):
     checked_fields = []
     checked_fields.append([i, j])
-    
+
 
 
 size = int(input("How big do you want the filed to be?"))
