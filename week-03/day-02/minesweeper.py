@@ -3,6 +3,12 @@ import random
 discovered_field_count = 1
 
 
+def display_field(arr):
+    for i in arr:
+        print(i)
+        print()
+
+
 def generate_field_size(num, fill):
     temp = []
     sol = []
@@ -20,8 +26,8 @@ def generate_mines(arr):
     mine_locations = []
 
     while goal != number_of_mines:
-        i_rand = random.randint(0, len(arr) - 1)
-        j_rand = random.randint(0, len(arr) - 1)
+        i_rand = random.randint(1, len(arr) - 2)
+        j_rand = random.randint(1, len(arr) - 2)
 
         if arr[i_rand][j_rand] != "*":
             arr[i_rand][j_rand] = "*"
@@ -31,6 +37,52 @@ def generate_mines(arr):
     return mine_locations
 
 
+
+def generate_clues(field):
+    count_of_surrounding_mines = 0
+    for i in range(1, len(field)-1):
+        for j in range(1, len(field)-1):
+            if i == 0 or j == 0 or i == len(field) -1 or j == len(field) -1:
+                field[i][j] = 0
+            elif field[i][j] == "*":
+                continue
+            else:
+                if field[i-1][j-1] == "*":
+                    count_of_surrounding_mines += 1
+                if field[i-1][j] == "*":
+                    count_of_surrounding_mines += 1
+                if field[i-1][j+1] == "*":
+                    count_of_surrounding_mines += 1
+                if field[i][j-1] == "*":
+                    count_of_surrounding_mines += 1
+                if field[i][j+1] == "*":
+                    count_of_surrounding_mines += 1
+                if field[i+1][j-1] == "*":
+                    count_of_surrounding_mines += 1
+                if field[i+1][j] == "*":
+                    count_of_surrounding_mines += 1
+                if field[i+1][j+1] == "*":
+                    count_of_surrounding_mines += 1
+
+                field[i][j] = str(count_of_surrounding_mines)
+                count_of_surrounding_mines = 0
+
+
+
+
+
+
+
+front_field = generate_field_size(5, "0")
+back_filed = generate_field_size(7, "0")
+loc = generate_mines(back_filed)
+generate_clues(back_filed)
+display_field(front_field)
+print()
+print()
+display_field(back_filed)
+
+'''
 def compare_fields(locations, neighbours):
     matches = 0
     for i in neighbours:
@@ -43,8 +95,8 @@ def compare_fields(locations, neighbours):
 
 def generate_clues(arr, locations):
     neighbours = []
-    for i in range(len(arr)):
-        for j in range(len(arr)):
+    for i in range(1:len(arr)-1):
+        for j in range(1:len(arr)-1):
             if arr[i][j] != "*":
                 neighbours.append([i + 1, j])
                 neighbours.append([i - 1, j])
@@ -54,10 +106,7 @@ def generate_clues(arr, locations):
                 neighbours.clear()
 
 
-def display_list(arr):
-    for i in arr:
-        print(str(i) + " ")
-        print()
+
 
 
 def explore_field(i, j, front, back):
@@ -93,7 +142,7 @@ while discovered_field_count != 0:
         display_list(field_front)
         discovered_field_count -= 1
 
-'''
+
 test = generate_field_size(5)
 loc = generate_mines(test)
 display_list(test)
@@ -102,4 +151,6 @@ generate_clues(test, loc)
 print(loc)
 print("-------------")
 display_list(test)
+
+
 '''
