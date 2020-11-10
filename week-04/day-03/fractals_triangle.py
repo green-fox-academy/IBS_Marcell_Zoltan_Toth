@@ -2,10 +2,10 @@ from tkinter import *
 
 root = Tk()
 
-canvas = Canvas(root, width="350", height="350")
+canvas = Canvas(root, width="1000", height="1000")
 canvas.pack()
 
-initial_list = [[10, 10], [310, 10], [160, 310]]
+initial_list = [[10, 10], [910, 10], [450, 910]]
 
 
 def middle_point(point1, point2):
@@ -23,7 +23,7 @@ def draw_triangle(list_of_points, depth):
     canvas.create_line(list_of_points[0][0], list_of_points[0][1], list_of_points[1][0], list_of_points[1][1])
     canvas.create_line(list_of_points[1][0], list_of_points[1][1], list_of_points[2][0], list_of_points[2][1])
     canvas.create_line(list_of_points[2][0], list_of_points[2][1], list_of_points[0][0], list_of_points[0][1])
-    if depth < 7:
+    if depth < 8:
         first = middle_point(list_of_points[0], list_of_points[1])
         second = middle_point(list_of_points[1], list_of_points[2])
         third = middle_point(list_of_points[2], list_of_points[0])
