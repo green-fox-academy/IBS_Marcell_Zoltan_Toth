@@ -1,7 +1,7 @@
 import sys
 from os import path
 
-#tasks_global = []
+tasks_global = []
 
 
 def load_data():
@@ -26,6 +26,11 @@ def print_data(tasks):
     for i in range(len(tasks)):
         print(str(i+1) + " - " + tasks[i])
 
+def print_data_unchecked(tasks):
+    for i in range(len(tasks)):
+        if tasks[i][1] == " ":
+            print(str(i+1) + " - " + tasks[i])
+
 
 def print_usage():
     print("Command line arguments:")
@@ -44,6 +49,7 @@ def remove_task(index):
     global tasks_global
     tasks_global.pop(index - 1)
 
+
 def check_task(index):
     global tasks_global
     tasks_global[index - 1] = "[x" + tasks_global[index - 1][2:]
@@ -52,14 +58,18 @@ def check_task(index):
 
 
 
-
 if len(sys.argv) == 1:
     print_usage()
 
-elif sys.argv[1] == "-l":
-    print("list all the tasks")
+elif sys.argv[1] == "-la" or sys.argv[1] == "-ListAll":
+    tasks_global = load_data()
+    print_data(tasks_global)
 
-elif sys.argv[1] == "-a":
+elif sys.argv[1] == "-l" or sys.argv[1] == "-List":
+    tasks_global = load_data()
+    print_data_unchecked(tasks_global)
+
+elif sys.argv[1] == "-a" or sys.argv[1] == "-Add":
     if len(sys.argv) == 3:
         tasks_global = load_data()
         add_new_task(sys.argv[2])
@@ -67,7 +77,7 @@ elif sys.argv[1] == "-a":
     else:
         print("Unable to add: no task provided")
 
-elif sys.argv[1] == "-r":
+elif sys.argv[1] == "-r" or sys.argv[1] == "-Remove":
 
     tasks_global = load_data()
 
@@ -75,7 +85,7 @@ elif sys.argv[1] == "-r":
         print("Unable to remove: no index provided")
     else:
         if sys.argv[2].isnumeric():
-            if len(tasks_global) <= int(sys.argv[2]):
+            if len(tasks_global) < int(sys.argv[2]):
                 print("Unable to remove: index is out of bound")
             else:
                 remove_task(int(sys.argv[2]))
@@ -84,14 +94,14 @@ elif sys.argv[1] == "-r":
             print("Unable to remove: index is not a number")
 
 
-elif sys.argv[1] == "-c":
+elif sys.argv[1] == "-c" or sys.argv[1] == "-Check":
     tasks_global = load_data()
 
     if len(sys.argv) == 2:
         print("Unable to check: no index provided")
     else:
         if sys.argv[2].isnumeric():
-            if len(tasks_global) <= int(sys.argv[2]):
+            if len(tasks_global) < int(sys.argv[2]):
                 print("Unable to check: index is out of bound")
             else:
                 check_task(int(sys.argv[2]))
