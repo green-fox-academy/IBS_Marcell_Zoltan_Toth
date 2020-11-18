@@ -1,7 +1,7 @@
 import sys
 from os import path
 
-tasks_global = []
+#tasks_global = []
 
 
 def load_data():
@@ -44,6 +44,14 @@ def remove_task(index):
     global tasks_global
     tasks_global.pop(index - 1)
 
+def check_task(index):
+    global tasks_global
+    tasks_global[index - 1] = "[x" + tasks_global[index - 1][2:]
+
+
+
+
+
 
 if len(sys.argv) == 1:
     print_usage()
@@ -77,9 +85,21 @@ elif sys.argv[1] == "-r":
 
 
 elif sys.argv[1] == "-c":
-    print("completed a task")
+    tasks_global = load_data()
+
+    if len(sys.argv) == 2:
+        print("Unable to check: no index provided")
+    else:
+        if sys.argv[2].isnumeric():
+            if len(tasks_global) <= int(sys.argv[2]):
+                print("Unable to check: index is out of bound")
+            else:
+                check_task(int(sys.argv[2]))
+                save_data(tasks_global)
+        else:
+            print("Unable to check: index is not a number")
 
 else:
-    print("case not handled so far")
+    print("Unsupported argument")
 
 

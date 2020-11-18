@@ -1,2 +1,4 @@
 [ ] Feed the monkey
+[x] Feed the zebra
+[ ] Feed the donkey
 [ ] Feed the lion
