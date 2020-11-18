@@ -1,10 +1,12 @@
 import sys
 from os import path
 
-tasks_global = ["take a nap", "brush teeth"]
+tasks_global = []
+
 
 def load_data():
     buffer2 = []
+    buffer = []
     try:
         with open("database.txt", "r") as file:
             buffer = file.readlines()
@@ -25,16 +27,6 @@ def print_data(tasks):
         print(str(i+1) + " - " + tasks[i])
 
 
-tasks = load_data()
-print_data(tasks)
-
-tasks = ["read", "netflix", "chill"]
-save_data(tasks)
-
-
-'''
-
-
 def print_usage():
     print("Command line arguments:")
     print("\t-l\tLists all the tasks")
@@ -42,27 +34,35 @@ def print_usage():
     print("\t-r\tRemoves a task")
     print("\t-c\tCompletes a task")
 
-def add_new_task():
-    if path.exists("database.txt"):
-        print("we have a database")
-    else:
-        with open("database.txt", "a") as file:
+
+def add_new_task(new_task):
+    global tasks_global
+    tasks_global.append("[ ] " + new_task)
+
 
 
 
 if len(sys.argv) == 1:
     print_usage()
+
 elif sys.argv[1] == "-l":
     print("list all the tasks")
+
 elif sys.argv[1] == "-a":
-    print("add a new task")
-    add_new_task()
+    if len(sys.argv) == 3:
+        tasks_global = load_data()
+        add_new_task(sys.argv[2])
+        save_data(tasks_global)
+    else:
+        print("Unable to add: no task provided")
+
 elif sys.argv[1] == "-r":
     print("remove a task")
+
 elif sys.argv[1] == "-c":
     print("completed a task")
+
 else:
     print("case not handled so far")
 
 
-'''
