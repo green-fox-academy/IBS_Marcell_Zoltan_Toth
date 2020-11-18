@@ -40,6 +40,9 @@ def add_new_task(new_task):
     tasks_global.append("[ ] " + new_task)
 
 
+def remove_task(index):
+    global tasks_global
+    tasks_global.pop(index - 1)
 
 
 if len(sys.argv) == 1:
@@ -57,7 +60,21 @@ elif sys.argv[1] == "-a":
         print("Unable to add: no task provided")
 
 elif sys.argv[1] == "-r":
-    print("remove a task")
+
+    tasks_global = load_data()
+
+    if len(sys.argv) == 2:
+        print("Unable to remove: no index provided")
+    else:
+        if sys.argv[2].isnumeric():
+            if len(tasks_global) <= int(sys.argv[2]):
+                print("Unable to remove: index is out of bound")
+            else:
+                remove_task(int(sys.argv[2]))
+                save_data(tasks_global)
+        else:
+            print("Unable to remove: index is not a number")
+
 
 elif sys.argv[1] == "-c":
     print("completed a task")
