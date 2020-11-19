@@ -1,3 +1,9 @@
-[ ] sleep
-[ ] dance
-[x] cry
+[x] sleep
+[x] clap
+[x] rap
+[x] kick
+[ ] pounch
+[ ] bring
+[x] ride
+[ ] sail
+[ ] surf
