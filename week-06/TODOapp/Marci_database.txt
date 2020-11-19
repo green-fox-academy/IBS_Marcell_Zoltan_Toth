@@ -1,0 +1,3 @@
+[x] TENNIS
+[x] PLAY FOCI
+[x] PLAY WATERPOLO

@@ -4,11 +4,12 @@ from os import path
 tasks_global = []
 
 
-def load_data():
+def load_data(user):
     buffer2 = []
     buffer = []
+    filename = user + "_database.txt"
     try:
-        with open("database.txt", "r") as file:
+        with open(filename, "r") as file:
             buffer = file.readlines()
     finally:
         for i in range(len(buffer)):
@@ -16,21 +17,22 @@ def load_data():
         return buffer2
 
 
-def save_data(tasks):
-    with open("database.txt", "w") as file:
+def save_data(tasks, user):
+    filename = user + "_database.txt"
+    with open(filename, "w") as file:
         for i in tasks:
             file.write(i + "\n")
 
 
 def print_data(tasks):
     for i in range(len(tasks)):
-        print(str(i+1) + " - " + tasks[i])
+        print(str(i + 1) + " - " + tasks[i])
 
 
 def print_data_unchecked(tasks):
     for i in range(len(tasks)):
         if tasks[i][1] == " ":
-            print(str(i+1) + " - " + tasks[i])
+            print(str(i + 1) + " - " + tasks[i])
 
 
 def print_usage():
@@ -59,13 +61,14 @@ def check_task(indexes):
     for i in indexes:
         tasks_global[i - 1] = "[x" + tasks_global[i - 1][2:]
 
+
 def modify_task(indexes):
     global tasks_global
 
     if len(indexes[1]) != 0:
         for i, v in indexes[1].items():
-            if tasks_global[i-1][1] == " ":
-                tasks_global[i-1] = "[ ] " + v
+            if tasks_global[i - 1][1] == " ":
+                tasks_global[i - 1] = "[ ] " + v
             else:
                 tasks_global[i - 1] = "[x] " + v
 
@@ -100,17 +103,18 @@ def sort_arguments(case):
     ret.append(bad_args)
     return ret
 
+
 def sort_arguments_dict():
     ret = {}
     good_args = {}
     bad_args = []
     order_ok = True
 
-    for i in range(2,len(sys.argv),2):
+    for i in range(2, len(sys.argv), 2):
         if order_ok:
             if sys.argv[i].isnumeric():
                 if len(tasks_global) < int(sys.argv[i]):
-                    print("Unable to replace " + sys.argv[i] + " and " + sys.argv[i +1 ] + ": index is out of bound")
+                    print("Unable to replace " + sys.argv[i] + " and " + sys.argv[i + 1] + ": index is out of bound")
                     bad_args.append(sys.argv[i])
                     bad_args.append(sys.argv[i + 1])
                 else:
@@ -126,63 +130,61 @@ def sort_arguments_dict():
     return ret
 
 
+user = input("Specify the user!")
 
 if len(sys.argv) == 1:
     print_usage()
 
-elif sys.argv[1] == "-la" or sys.argv[1] == "-ListAll":
-    tasks_global = load_data()
+elif sys.argv[1] == "-la" or sys.argv[1] == "--ListAll":
+    tasks_global = load_data(user)
     print_data(tasks_global)
 
-elif sys.argv[1] == "-l" or sys.argv[1] == "-List":
-    tasks_global = load_data()
+elif sys.argv[1] == "-l" or sys.argv[1] == "--List":
+    tasks_global = load_data(user)
     print_data_unchecked(tasks_global)
 
-elif sys.argv[1] == "-a" or sys.argv[1] == "-Add":
+elif sys.argv[1] == "-a" or sys.argv[1] == "--Add":
     if len(sys.argv) > 2:
-        tasks_global = load_data()
-        for i in range(2,len(sys.argv)):
+        tasks_global = load_data(user)
+        for i in range(2, len(sys.argv)):
             add_new_task(sys.argv[i])
-        save_data(tasks_global)
+        save_data(tasks_global, user)
     else:
         print("Unable to add: no task provided")
 
-elif sys.argv[1] == "-r" or sys.argv[1] == "-Remove":
+elif sys.argv[1] == "-r" or sys.argv[1] == "--Remove":
 
-    tasks_global = load_data()
+    tasks_global = load_data(user)
     args_in_order = sort_arguments("remove")
 
     if len(args_in_order[0]) != 0:
         remove_task(args_in_order[0])
-        save_data(tasks_global)
+        save_data(tasks_global, user)
 
     if len(args_in_order[1]) != 0:
         print("The following argument(s) are invalid: " + str(args_in_order[1]))
 
-elif sys.argv[1] == "-c" or sys.argv[1] == "-Check":
+elif sys.argv[1] == "-c" or sys.argv[1] == "--Check":
 
-    tasks_global = load_data()
+    tasks_global = load_data(user)
     args_in_order = sort_arguments("check")
 
     if len(args_in_order[0]) != 0:
         check_task(args_in_order[0])
-        save_data(tasks_global)
+        save_data(tasks_global, user)
 
     if len(args_in_order[1]) != 0:
         print("The following argument(s) are invalid: " + str(args_in_order[1]))
 
-elif sys.argv[1] == "-m" or sys.argv[1] == "-Modify":
+elif sys.argv[1] == "-m" or sys.argv[1] == "--Modify":
 
-    tasks_global = load_data()
+    tasks_global = load_data(user)
     if len(sys.argv) < 4:
         print("Unable to modify: no replacement value is provided")
     else:
         args_in_order = sort_arguments_dict()
         modify_task(args_in_order)
-        save_data(tasks_global)
-
+        save_data(tasks_global, user)
 
 else:
     print("Unsupported argument")
-
-

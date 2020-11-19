@@ -1,8 +1,1 @@
-[ ] SLEEP
-[ ] RAP
-[ ] KICK
-[x] PUNCH
-[x] BRING
-[ ] RIDE
-[ ] SAIL
-[ ] SELL
+[ ] Play tennis
