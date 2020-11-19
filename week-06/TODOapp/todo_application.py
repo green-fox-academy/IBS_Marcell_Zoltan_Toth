@@ -26,6 +26,7 @@ def print_data(tasks):
     for i in range(len(tasks)):
         print(str(i+1) + " - " + tasks[i])
 
+
 def print_data_unchecked(tasks):
     for i in range(len(tasks)):
         if tasks[i][1] == " ":
@@ -58,6 +59,20 @@ def check_task(indexes):
     for i in indexes:
         tasks_global[i - 1] = "[x" + tasks_global[i - 1][2:]
 
+def modify_task(indexes):
+    global tasks_global
+
+    if len(indexes[1]) != 0:
+        for i, v in indexes[1].items():
+            if tasks_global[i-1][1] == " ":
+                tasks_global[i-1] = "[ ] " + v
+            else:
+                tasks_global[i - 1] = "[x] " + v
+
+    if len(indexes[0]) != 0:
+        print("Error occured, unprocessed indices: ")
+        print(indexes[0])
+
 
 def argument_ok(arg, case):
     if not sys.argv[2].isnumeric():
@@ -83,6 +98,31 @@ def sort_arguments(case):
 
     ret.append(good_args)
     ret.append(bad_args)
+    return ret
+
+def sort_arguments_dict():
+    ret = {}
+    good_args = {}
+    bad_args = []
+    order_ok = True
+
+    for i in range(2,len(sys.argv),2):
+        if order_ok:
+            if sys.argv[i].isnumeric():
+                if len(tasks_global) < int(sys.argv[i]):
+                    print("Unable to replace " + sys.argv[i] + " and " + sys.argv[i +1 ] + ": index is out of bound")
+                    bad_args.append(sys.argv[i])
+                    bad_args.append(sys.argv[i + 1])
+                else:
+                    good_args[int(sys.argv[i])] = sys.argv[i + 1]
+            else:
+                order_ok = False
+        else:
+            bad_args.append(sys.argv[i])
+            bad_args.append(sys.argv[i + 1])
+
+    ret[0] = bad_args
+    ret[1] = good_args
     return ret
 
 
@@ -130,6 +170,17 @@ elif sys.argv[1] == "-c" or sys.argv[1] == "-Check":
 
     if len(args_in_order[1]) != 0:
         print("The following argument(s) are invalid: " + str(args_in_order[1]))
+
+elif sys.argv[1] == "-m" or sys.argv[1] == "-Modify":
+
+    tasks_global = load_data()
+    if len(sys.argv) < 4:
+        print("Unable to modify: no replacement value is provided")
+    else:
+        args_in_order = sort_arguments_dict()
+        modify_task(args_in_order)
+        save_data(tasks_global)
+
 
 else:
     print("Unsupported argument")

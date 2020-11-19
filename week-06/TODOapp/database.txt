@@ -1,9 +1,8 @@
-[x] sleep
-[x] clap
-[x] rap
-[x] kick
-[ ] pounch
-[ ] bring
-[x] ride
-[ ] sail
-[ ] surf
+[ ] SLEEP
+[ ] RAP
+[ ] KICK
+[x] PUNCH
+[x] BRING
+[ ] RIDE
+[ ] SAIL
+[ ] SELL
