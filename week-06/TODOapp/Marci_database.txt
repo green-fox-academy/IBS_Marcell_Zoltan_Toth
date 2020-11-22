@@ -1,3 +1,5 @@
 [x] TENNIS
-[x] PLAY FOCI
 [x] PLAY WATERPOLO
+[ ] Feed fish
+[x] Sell
+[ ] Stand
