@@ -1,5 +1,5 @@
-[x] TENNIS
-[x] PLAY WATERPOLO
-[ ] Feed fish
 [x] Sell
 [ ] Stand
+[x] Egy
+[ ] Ketto
+[x] Harom
