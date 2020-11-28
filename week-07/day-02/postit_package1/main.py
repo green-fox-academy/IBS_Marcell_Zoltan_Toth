@@ -1,4 +1,4 @@
-from package1.post_it import Post_it
+from postit_package1.post_it import Post_it
 
 first = Post_it("blue", "Hi", "White")
 second = Post_it("red", "Hello", "Black")
