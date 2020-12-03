@@ -1,3 +1,4 @@
+from animal_package3.farm import Farm
 from animal_package3.animal import Animal
 
 cat = Animal()
@@ -22,4 +23,13 @@ for i in range(20):
 dog.print_stats()
 
 
+farm = Farm(3)
 
+farm.add(dog)
+farm.add(cat)
+
+farm.breed()
+farm.breed()
+farm.slaughter()
+
+farm.breed()
