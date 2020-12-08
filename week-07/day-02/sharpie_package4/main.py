@@ -1,5 +1,5 @@
-from sharpie_package4.sharpie import Sharpie
-from sharpie_package4.sharpie_set import SharpieSet
+from sharpie import Sharpie
+from sharpie_set import SharpieSet
 
 first = Sharpie("Blue", 1, 200)
 second = Sharpie("Red", 3.45, 30)

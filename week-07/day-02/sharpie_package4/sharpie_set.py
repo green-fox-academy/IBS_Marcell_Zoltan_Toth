@@ -1,6 +1,10 @@
 class SharpieSet:
     sharpies = []
 
+    def __init__(self):
+        self.sharpies = []
+
+
     def add(self, sharpie):
         self.sharpies.append(sharpie)
 
